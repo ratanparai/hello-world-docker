@@ -20,7 +20,7 @@ jobs:
     - name: set environments
       run: echo "Tags are > ${TAG}"
       env:
-        TAG: $(git tag --points-at HEAD | cut -c 2-4)
+        TAG: ${{ git tag --points-at HEAD | cut -c 2-4 }}
     
     - name: build
       run: docker-compose build helloworld
