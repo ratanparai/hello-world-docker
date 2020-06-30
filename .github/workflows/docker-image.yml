@@ -18,9 +18,7 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: set environments
-      run: echo "Tags are > ${TAG}"
-      env:
-        TAG: ${{ git tag --points-at HEAD | cut -c 2-4 }}
+      run: echo "::set-env name=TAG::$(git tag --points-at HEAD | cut -c 2-4)"
     
     - name: build
       run: docker-compose build helloworld
