@@ -18,13 +18,17 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: set environments
-      run: echo Tag for the image $TAG
+      run: echo "Tags are > ${TAG}"
       env:
-        TAG: $(git tag --points-at HEAD)
+        TAG: $(git tag --points-at HEAD | cut -c 2-4)
     
     - name: build
       run: docker-compose build helloworld
     
     - name: push image
-      if: github.ref == 'refs/heads/master'
+      if:
+        contains('
+          refs/heads/master
+          refs/tags/
+        ', github.ref)
       run: echo "TODO publish docker image"
