@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: set environments
+      env:
+        TAG: $(git tag --points-at HEAD)
+    
+    - name: build
+      run: docker-compose build helloworld
+    
+    - name: push image
+      if: github.ref == 'refs/heads/master'
+      run: echo "TODO publish docker image"
