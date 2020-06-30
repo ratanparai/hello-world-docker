@@ -23,6 +23,12 @@ jobs:
     - name: build
       run: docker-compose build helloworld
     
+    - uses: azure/docker-login@v1
+      with:
+        login-server: index.docker.io
+        username: ${{ secrets.DOCKERIO_USERNAME }}
+        password: ${{ secrets.DOCKERIO_PASSWORD }}
+    
     - name: push image
       if: startsWith(github.ref, 'refs/tags') || github.ref == 'refs/heads/master'
-      run: echo "TODO publish docker image"
+      run: docker-compose push
